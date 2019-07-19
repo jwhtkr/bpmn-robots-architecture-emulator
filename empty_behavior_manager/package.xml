@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>empty_behavior_manager</name>
+  <version>0.0.0</version>
+  <description>The empty_behavior_manager package</description>
+  <maintainer email="james@todo.todo">james</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>behavior_manager</depend>
+
+  <export></export>
+</package>
