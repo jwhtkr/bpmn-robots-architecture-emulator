@@ -4,11 +4,14 @@
  * @Author: James Swedeen
  *
  * @brief
- * Simply makes an instance of the EmptyBehavorManager class for testing.
+ * Simply makes an instance of the BehaviorPool class templated to the EmptyBehavorManager class for testing.
  **/
 
 /* Local Headers */
 #include"empty_behavior_manager/empty_behavior_manager.hpp"
+
+/* BehaviorPool */
+#include<behavior_pool/behavior_pool.hpp>
 
 /* ROS Headers */
 #include<ros/ros.h>
@@ -22,13 +25,15 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "empty_behavior_manager_node");
   ros::NodeHandle m_nh;
 
-  std::unique_ptr<EmptyBehaviorManager> test(new EmptyBehaviorManager("http://localhost:8080/", "worker_id", "topic"));
+  BehaviorPool<EmptyBehaviorManager> test("behavior_listen_topic", "empty behavior", "http://localhost:8080/");
 
-  std::cin.get();
+  ros::Rate loop_rate(1);
 
-  test.reset();
-
-  std::cin.get();
+  while(m_nh.ok())
+  {
+    ros::spin();
+    loop_rate.sleep();
+  }
 
   exit(EXIT_SUCCESS);
 }

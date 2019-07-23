@@ -6,6 +6,7 @@ add_compile_options(-std=c++11 -g -O0)
 find_package(catkin REQUIRED
   COMPONENTS
     behavior_manager
+    behavior_pool
 )
 
 ###################################
@@ -23,6 +24,7 @@ catkin_package(
     ${PROJECT_NAME}
   CATKIN_DEPENDS
     behavior_manager
+    behavior_pool
 )
 
 ###########
