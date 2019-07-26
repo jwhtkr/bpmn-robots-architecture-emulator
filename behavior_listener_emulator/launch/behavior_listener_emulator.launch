@@ -3,7 +3,7 @@
 <launch>
   <arg name="notifying_topic" default="notifying_topic" />
 
-  <node name="behavior_listener_emulator" type="behavior_listener_emulator_node" pkg="behavior_listener_emulator" output="screen" >
+  <node name="behavior_listener_emulator" type="behavior_listener_emulator_node" pkg="behavior_listener_emulator" output="screen" launch-prefix="xterm -e" >
     <param name="notifying_topic" value="$(arg notifying_topic)" />
   </node>
 </launch>

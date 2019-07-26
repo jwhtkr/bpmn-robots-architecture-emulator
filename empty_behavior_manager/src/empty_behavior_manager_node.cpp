@@ -25,7 +25,7 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "empty_behavior_manager_node");
   ros::NodeHandle m_nh;
 
-  BehaviorPool<EmptyBehaviorManager> test("behavior_listen_topic", "empty behavior", "http://localhost:8080/");
+  BehaviorPool<EmptyBehaviorManager> test("topic", "empty behavior", "http://localhost:8080/");
 
   ros::Rate loop_rate(1);
 
