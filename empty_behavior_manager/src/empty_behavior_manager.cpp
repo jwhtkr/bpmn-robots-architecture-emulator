@@ -18,16 +18,10 @@
 #include<vector>
 
 EmptyBehaviorManager::EmptyBehaviorManager(const std::string& base_uri,
-                                           const std::string& worker_id,
+                                           const std::string& name,
                                            const std::string& topic)
- : BehaviorManager(base_uri, worker_id, topic, std::vector<std::string>(), 1),
-   name("empty_behavior_manager")
+ : BehaviorManager(base_uri, name, topic, std::vector<std::string>(), 1)
 {}
-
-const std::string& EmptyBehaviorManager::getBehaviorName() const noexcept
-{
-  return this->name;
-}
 
 uint8_t EmptyBehaviorManager::getBehaviorPriority() const noexcept
 {

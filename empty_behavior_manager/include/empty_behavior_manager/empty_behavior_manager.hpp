@@ -35,7 +35,7 @@ public:
    * @Constructor
    **/
   EmptyBehaviorManager(const std::string& base_uri,
-                       const std::string& worker_id,
+                       const std::string& name,
                        const std::string& topic);
   /**
    * @Deconstructor
@@ -49,15 +49,12 @@ public:
   /**
    * @get
    **/
-  const std::string& getBehaviorName()     const noexcept override;
-        uint8_t      getBehaviorPriority() const noexcept override;
+  uint8_t getBehaviorPriority() const noexcept override;
 protected:
   /**
    * @runBehavior
    **/
   void runBehavior() override;
-private:
-  std::string name;
 };
 
 #endif
