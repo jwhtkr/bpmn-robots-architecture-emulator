@@ -30,7 +30,7 @@ int main(int argc, char** argv)
 {
   ros::init(argc, argv, "resource_manager_emulator");
   ros::NodeHandle m_nh;
-  ros::NodeHandle p_nh;
+  ros::NodeHandle p_nh("~");
 
   std::string        request_topic;
   ros::ServiceServer request_srv;
@@ -45,6 +45,8 @@ int main(int argc, char** argv)
   // Connects to rest of architecture
   request_srv       = m_nh.advertiseService(request_topic, requestCallback);
   get_resources_srv = m_nh.serviceClient<architecture_msgs::ResourceRequest>(get_resources_topic);
+
+  ros::spinOnce();
 
   while(m_nh.ok())
   {

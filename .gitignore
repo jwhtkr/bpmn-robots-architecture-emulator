@@ -1,4 +1,5 @@
 
 *.swp
 .catkin_tools/
+.vscode
 
