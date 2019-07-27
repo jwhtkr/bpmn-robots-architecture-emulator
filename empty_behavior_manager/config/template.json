@@ -1,0 +1,21 @@
+[
+  {
+    "name"      : "role1",
+    "required"  : true,
+    "priority"  : 3,
+    "resources" :
+    [
+      {
+        "name"     : "resource1",
+        "category" : "icecream",
+        "type"     : "vanilla",
+        "required" : true,
+        "priority" : 10,
+        "nodes" :
+        [
+          "behavior node"
+        ]
+      }
+    ]
+  }
+]
