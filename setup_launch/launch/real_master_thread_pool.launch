@@ -1,11 +1,12 @@
-<!-- full_emulator.launch -->
+<!-- real_master_thread_pool.launch -->
 
 <launch>
-  <arg name="listener_output" value="behaviors" />
-  <arg name="resource_ask"    value="resources_ask" />
-  <arg name="resource_take"   value="resources_take" />
-  <arg name="resource_return" value="resource_return" />
-  <arg name="thread_pool"     value="thread_pool" />
+  <arg name="listener_output"    value="behaviors" />
+  <arg name="resource_ask"       value="resources_ask" />
+  <arg name="resource_take"      value="resources_take" />
+  <arg name="resource_return"    value="resource_return" />
+  <arg name="master_thread_pool" value="master_thread_pool" />
+  <arg name="machine_pool"       value="machine_pool" />
 
   <include file="$(find behavior_listener_emulator)/launch/behavior_listener_emulator.launch" >
     <arg name="notifying_topic" value="$(arg listener_output)" />
@@ -21,11 +22,17 @@
     <arg name="resource_return_topic"  value="$(arg resource_return)" />
     <arg name="resource_request_topic" value="$(arg resource_ask)" />
     <arg name="take_resources_topic"   value="$(arg resource_take)" />
-    <arg name="modify_nodes_topic"     value="$(arg thread_pool)" />
+    <arg name="modify_nodes_topic"     value="$(arg master_thread_pool)" />
     <arg name="config_file"            value="$(find empty_behavior_manager)/config/template.json" />
   </include>
 
-  <include file="$(find master_thread_pool_emulator)/launch/master_thread_pool_emulator.launch" >
-    <arg name="request_topic" value="$(arg thread_pool)" />
+  <include file="$(find master_thread_pool)/launch/master_thread_pool.launch" >
+    <arg name="service_provided"   value="$(arg master_thread_pool)" />
+    <arg name="machine_pool_topic" value="$(arg machine_pool)" />
+  </include>
+
+  <include file="$(find machine_pool_emulator)/launch/machine_pool_emulator.launch" >
+    <arg name="request_topic" value="$(arg machine_pool)" />
   </include>
 </launch>
+

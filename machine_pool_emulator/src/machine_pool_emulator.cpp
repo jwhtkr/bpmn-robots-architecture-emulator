@@ -13,6 +13,7 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "machine_pool_emulator_node");
   ros::NodeHandle nh;
+  ros::NodeHandle p_nh("~");
 
   std::string request_topic;
   ros::ServiceServer request_server;
