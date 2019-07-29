@@ -27,11 +27,19 @@
   </include>
 
   <include file="$(find master_thread_pool)/launch/master_thread_pool.launch" >
-    <arg name="service_provided"   value="$(arg master_thread_pool)" />
+    <arg name="service_provided_topic"   value="$(arg master_thread_pool)" />
     <arg name="machine_pool_topic" value="$(arg machine_pool)" />
   </include>
 
-  <include file="$(find machine_pool_emulator)/launch/machine_pool_emulator.launch" >
+  <include file="$(find machine_pool_emulator)/launch/machine_pool_emulator.launch" ns="robot1" >
+    <arg name="request_topic" value="$(arg machine_pool)" />
+  </include>
+
+  <include file="$(find machine_pool_emulator)/launch/machine_pool_emulator.launch" ns="robot2" >
+    <arg name="request_topic" value="$(arg machine_pool)" />
+  </include>
+
+  <include file="$(find machine_pool_emulator)/launch/machine_pool_emulator.launch" ns="robot3" >
     <arg name="request_topic" value="$(arg machine_pool)" />
   </include>
 </launch>

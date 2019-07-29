@@ -52,21 +52,21 @@ int main(int argc, char** argv)
         msg.topic = from_user;
       }
 
-      ROS_INFO("Name (if n is entered it will default to the previous topic value):");
+      ROS_INFO("Name (if n is entered it will default to the previous name value):");
       std::cin >> from_user;
       if("n" != from_user)
       {
         msg.name = from_user;
       }
 
-      ROS_INFO("Instance_id (if n is entered it will default to the previous topic value):");
+      ROS_INFO("Instance ID (if n is entered it will default to the previous id value):");
       std::cin >> from_user;
       if("n" != from_user)
       {
         msg.instance_id = from_user;
       }
 
-      ROS_INFO("Status (if n is entered it will default to the previous topic value) (NEW == 2, CANCELED == 1):");
+      ROS_INFO("Status (if n is entered it will default to the previous value) (NEW == 2, CANCELED == 1):");
       std::cin >> from_user;
       if("n" != from_user)
       {

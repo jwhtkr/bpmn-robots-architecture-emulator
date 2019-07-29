@@ -26,6 +26,9 @@ bool requestCallback(architecture_msgs::ResourceRequest::Request&  req,
 
 void askForResources(ros::ServiceClient& get_resources_srv);
 
+std::string        get_resources_topic;
+ros::ServiceClient get_resources_srv;
+
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "resource_manager_emulator");
@@ -35,16 +38,12 @@ int main(int argc, char** argv)
   std::string        request_topic;
   ros::ServiceServer request_srv;
 
-  std::string        get_resources_topic;
-  ros::ServiceClient get_resources_srv;
-
   // Get topic string from ROS Parameter Server
   p_nh.getParam("request_topic",       request_topic);
   p_nh.getParam("get_resources_topic", get_resources_topic);
 
   // Connects to rest of architecture
   request_srv       = m_nh.advertiseService(request_topic, requestCallback);
-  get_resources_srv = m_nh.serviceClient<architecture_msgs::ResourceRequest>(get_resources_topic);
 
   ros::spinOnce();
 
@@ -73,6 +72,10 @@ bool requestCallback(architecture_msgs::ResourceRequest::Request&  req,
                      architecture_msgs::ResourceRequest::Response& res)
 {
   std::unique_lock<std::mutex> lock(mux);
+  ros::NodeHandle m_nh;
+
+  get_resources_srv = m_nh.serviceClient<architecture_msgs::ResourceRequest>(req.behavior_id + "/" + get_resources_topic);
+
   std::string choice;
 
   ROS_INFO("Resource Request received.");
