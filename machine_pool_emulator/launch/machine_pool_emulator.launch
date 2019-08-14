@@ -1,11 +1,10 @@
-<!-- master_thread_pool_emulator.launch -->
+<!-- machine_pool_emulator.launch -->
 
 <launch>
   <arg name ="request_topic"    default="request_topic"
-        doc="This is the topic that recieves a ModifyNodes message and returns success" />
+        doc="This is the topic that receives a ModifyNodes message and returns success" />
 
-
-  <node name="machine_pool_emulator" type="machine_pool_emulator_node" pkg="machine_pool_emulator" output="screen">
+  <node name="machine_pool_emulator" type="machine_pool_emulator_node" pkg="machine_pool_emulator" output="screen" launch-prefix="xterm -e" >
     <param name="request_topic"  value="$(arg request_topic)"/>
   </node>
 </launch>

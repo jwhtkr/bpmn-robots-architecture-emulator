@@ -24,8 +24,13 @@ int main(int argc, char** argv)
 {
   ros::init(argc, argv, "empty_behavior_manager_node");
   ros::NodeHandle m_nh;
+  ros::NodeHandle p_nh("~");
 
-  BehaviorPool<EmptyBehaviorManager> test("behavior_listen_topic", "empty behavior", "http://localhost:8080/");
+  std::string listen_topic;
+
+  p_nh.getParam("listen_topic", listen_topic);
+
+  BehaviorPool<EmptyBehaviorManager> test(listen_topic, "empty_behavior", "http://localhost:8080/");
 
   ros::Rate loop_rate(1);
 
