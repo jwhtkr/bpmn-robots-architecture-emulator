@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(machine_pool_emulator)
+project(node_server_emulator)
 
 add_compile_options(-std=c++11 -g -O0)
 
 find_package(catkin REQUIRED
   COMPONENTS
     roscpp
-    architecture_msgs
+    node_server_msgs
 )
 
 ###################################
@@ -16,7 +16,7 @@ find_package(catkin REQUIRED
 catkin_package(
   CATKIN_DEPENDS
     roscpp
-    architecture_msgs
+    node_server_msgs
 )
 
 ###########
@@ -28,9 +28,9 @@ include_directories(
   include
   ${catkin_INCLUDE_DIRS}
 )
-## Machine Pool Emulator Node
+## Node server emulator Node
 
-add_executable(${PROJECT_NAME}_node src/machine_pool_emulator.cpp)
+add_executable(${PROJECT_NAME}_node src/node_server_emulator.cpp)
 set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME ${PROJECT_NAME}_node PREFIX "")
 add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(${PROJECT_NAME}_node
