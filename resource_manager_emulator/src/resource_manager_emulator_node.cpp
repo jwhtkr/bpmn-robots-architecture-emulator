@@ -21,6 +21,9 @@
 /* Protects threads */
 std::mutex mux;
 
+bool returnCallback(architecture_msgs::ResourceRequest::Request&  req,
+                    architecture_msgs::ResourceRequest::Response& res);
+
 bool requestCallback(architecture_msgs::ResourceRequest::Request&  req,
                      architecture_msgs::ResourceRequest::Response& res);
 
@@ -35,15 +38,17 @@ int main(int argc, char** argv)
   ros::NodeHandle m_nh;
   ros::NodeHandle p_nh("~");
 
-  std::string        request_topic;
-  ros::ServiceServer request_srv;
+  std::string        request_topic, return_resources_topic;
+  ros::ServiceServer request_srv,   return_resources_srv;
 
   // Get topic string from ROS Parameter Server
-  p_nh.getParam("request_topic",       request_topic);
-  p_nh.getParam("get_resources_topic", get_resources_topic);
+  p_nh.getParam("request_topic",          request_topic);
+  p_nh.getParam("get_resources_topic",    get_resources_topic);
+  p_nh.getParam("return_resources_topic", return_resources_topic);
 
   // Connects to rest of architecture
-  request_srv       = m_nh.advertiseService(request_topic, requestCallback);
+  request_srv          = m_nh.advertiseService(request_topic,          requestCallback);
+  return_resources_srv = m_nh.advertiseService(return_resources_topic, returnCallback);
 
   ros::spinOnce();
 
@@ -91,6 +96,15 @@ bool requestCallback(architecture_msgs::ResourceRequest::Request&  req,
       ROS_INFO("Returning full success.");
       res.success = true;
       res.roles = req.roles;
+      for(auto role_it = res.roles.begin(); role_it != res.roles.end(); role_it++)
+      {
+        for(auto resource_it = role_it->resources.begin(); resource_it != role_it->resources.end(); resource_it++)
+        {
+          ROS_INFO("What would you like the robot's namespace for this resource to be?");
+          ROS_INFO_STREAM("Resource: " << *resource_it);
+          std::cin >> resource_it->group_name;
+        }
+      }
       ROS_INFO("Response body:");
       ROS_INFO_STREAM(res);
       return true;
@@ -171,6 +185,21 @@ void askForResources(ros::ServiceClient& get_resources_srv)
 
   ROS_INFO("Response body:");
   ROS_INFO_STREAM(msg.response);
+}
+
+bool returnCallback(architecture_msgs::ResourceRequest::Request&  req,
+                    architecture_msgs::ResourceRequest::Response& res)
+{
+  std::unique_lock<std::mutex> lock(mux);
+
+  ROS_INFO_STREAM("Resources were released: " << req);
+
+  res.roles   = req.roles;
+  res.success = true;
+
+  ROS_INFO_STREAM("Returning with: " << res);
+
+  return true;
 }
 
 /* resource_manager_emulator_node.cpp */

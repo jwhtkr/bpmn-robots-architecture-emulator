@@ -10,8 +10,8 @@
 /* Local Headers */
 #include"empty_behavior_manager/empty_behavior_manager.hpp"
 
-/* BehaviorPool */
-#include<behavior_pool/behavior_pool.hpp>
+/* BehaviorManager Headers */
+#include<behavior_manager/behavior_pool.hpp>
 
 /* ROS Headers */
 #include<ros/ros.h>
@@ -26,13 +26,32 @@ int main(int argc, char** argv)
   ros::NodeHandle m_nh;
   ros::NodeHandle p_nh("~");
 
-  std::string listen_topic;
+  std::string listen_topic,
+              status_topic,
+              get_resources_topic,
+              give_resources_topic,
+              give_up_resources_topic,
+              modify_robots_topic,
+              config_file_path;
 
-  p_nh.getParam("listen_topic", listen_topic);
+  p_nh.getParam("listen_topic",            listen_topic);
+  p_nh.getParam("status_topic",            status_topic);
+  p_nh.getParam("get_resources_topic",     get_resources_topic);
+  p_nh.getParam("give_resources_topic",    give_resources_topic);
+  p_nh.getParam("give_up_resources_topic", give_up_resources_topic);
+  p_nh.getParam("modify_robots_topic",     modify_robots_topic);
+  p_nh.getParam("config_file_path",        config_file_path);
 
-  BehaviorPool<EmptyBehaviorManager> test(listen_topic, "empty_behavior", "http://localhost:8080/");
-
-  ros::Rate loop_rate(1);
+  behavior_manager::BehaviorPool<EmptyBehaviorManager> test("empty_behavior",
+                                                            "http://localhost:8080/",
+                                                            listen_topic,
+                                                            status_topic,
+                                                            get_resources_topic,
+                                                            give_resources_topic,
+                                                            give_up_resources_topic,
+                                                            modify_robots_topic,
+                                                            config_file_path);
+  ros::Rate loop_rate(30);
 
   while(m_nh.ok())
   {

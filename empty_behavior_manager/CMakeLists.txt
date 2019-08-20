@@ -6,7 +6,6 @@ add_compile_options(-std=c++11 -g -O0)
 find_package(catkin REQUIRED
   COMPONENTS
     behavior_manager
-    behavior_pool
 )
 
 ###################################
@@ -24,7 +23,6 @@ catkin_package(
     ${PROJECT_NAME}
   CATKIN_DEPENDS
     behavior_manager
-    behavior_pool
 )
 
 ###########
@@ -37,36 +35,36 @@ include_directories(
 )
 
 ## EmptyBehaviorManager Library
-add_library(${PROJECT_NAME}
-  src/empty_behavior_manager.cpp
-)
-add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(${PROJECT_NAME}
-  behavior_manager
-  ${catkin_LIBRARIES}
-)
+#add_library(${PROJECT_NAME}
+#  src/empty_behavior_manager.cpp
+#)
+#add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries(${PROJECT_NAME}
+#  behavior_manager
+#  ${catkin_LIBRARIES}
+#)
 
 ## Test Node
-add_executable(${PROJECT_NAME}_node
-  src/empty_behavior_manager_node.cpp
-  src/empty_behavior_manager.cpp
-)
-set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME ${PROJECT_NAME}_node PREFIX "")
-add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(${PROJECT_NAME}_node
-  behavior_manager
-  ${catkin_LIBRARIES}
-)
+#add_executable(${PROJECT_NAME}_node
+#  src/empty_behavior_manager_node.cpp
+#  src/empty_behavior_manager.cpp
+#)
+#set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME ${PROJECT_NAME}_node PREFIX "")
+#add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries(${PROJECT_NAME}_node
+#  behavior_manager
+#  ${catkin_LIBRARIES}
+#)
 
 #############
 ## Install ##
 #############
 
-install(TARGETS ${PROJECT_NAME}
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+#install(TARGETS ${PROJECT_NAME}
+#  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+#)
 
 install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}

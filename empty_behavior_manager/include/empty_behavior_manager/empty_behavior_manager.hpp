@@ -13,10 +13,13 @@
 /* Behavior Manager Headers */
 #include<behavior_manager/behavior_manager.hpp>
 
+/* Architecture Messages */
+#include<architecture_msgs/BehaviorStatus.h>
+
 /* C++ Headers */
 #include<string>
 
-class EmptyBehaviorManager : public BehaviorManager<>
+class EmptyBehaviorManager : public behavior_manager::BehaviorManager<>
 {
 public:
   /**
@@ -36,7 +39,13 @@ public:
    **/
   EmptyBehaviorManager(const std::string& base_uri,
                        const std::string& name,
-                       const std::string& topic);
+                       const std::string& camunda_topic,
+                       const std::string& status_topic,
+                       const std::string& get_resources_topic,
+                       const std::string& give_resources_topic,
+                       const std::string& give_up_resources_topic,
+                       const std::string& modify_robots_topic,
+                       const std::string& config_file_path);
   /**
    * @Deconstructor
    **/
@@ -49,7 +58,7 @@ public:
   /**
    * @get
    **/
-  uint8_t getBehaviorPriority() const noexcept override;
+  architecture_msgs::BehaviorStatus::Response::Ptr getStatus()           const noexcept override;
 protected:
   /**
    * @runBehavior

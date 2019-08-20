@@ -10,6 +10,9 @@
 /* Local Headers */
 #include"empty_behavior_manager/empty_behavior_manager.hpp"
 
+/* Architecture Messages */
+#include<architecture_msgs/BehaviorStatus.h>
+
 /* Behavior Manager Headers */
 #include<behavior_manager/behavior_manager.hpp>
 
@@ -19,13 +22,32 @@
 
 EmptyBehaviorManager::EmptyBehaviorManager(const std::string& base_uri,
                                            const std::string& name,
-                                           const std::string& topic)
- : BehaviorManager(base_uri, name, topic, std::vector<std::string>(), 1)
+                                           const std::string& camunda_topic,
+                                           const std::string& status_topic,
+                                           const std::string& get_resources_topic,
+                                           const std::string& give_resources_topic,
+                                           const std::string& give_up_resources_topic,
+                                           const std::string& modify_robots_topic,
+                                           const std::string& config_file_path)
+ : BehaviorManager(base_uri,
+                   name,
+                   0,
+                   camunda_topic,
+                   status_topic,
+                   get_resources_topic,
+                   give_resources_topic,
+                   give_up_resources_topic,
+                   modify_robots_topic,
+                   config_file_path)
 {}
 
-uint8_t EmptyBehaviorManager::getBehaviorPriority() const noexcept
+architecture_msgs::BehaviorStatus::Response::Ptr EmptyBehaviorManager::getStatus() const noexcept
 {
-  return 42;
+  architecture_msgs::BehaviorStatus::Response::Ptr output(behavior_manager::BehaviorManager<>::getStatus());
+
+  output->description = "This is a empty behavior made for architecture testing purposes.";
+
+  return output;
 }
 
 void EmptyBehaviorManager::runBehavior()
