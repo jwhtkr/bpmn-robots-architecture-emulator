@@ -20,25 +20,24 @@
 #include<string>
 #include<vector>
 
-EmptyBehaviorManager::EmptyBehaviorManager(const std::string& base_uri,
-                                           const std::string& name,
-                                           const std::string& camunda_topic,
-                                           const std::string& status_topic,
-                                           const std::string& get_resources_topic,
-                                           const std::string& give_resources_topic,
-                                           const std::string& give_up_resources_topic,
-                                           const std::string& modify_robots_topic,
-                                           const std::string& config_file_path)
+EmptyBehaviorManager::EmptyBehaviorManager(const std::string&                    base_uri,
+                                           const std::string&                    name,
+                                           const std::string&                    camunda_topic,
+                                           const std::string&                    status_topic,
+                                           const std::string&                    get_resources_topic,
+                                           const std::string&                    give_resources_topic,
+                                           const std::string&                    update_resources_topic,
+                                           const std::string&                    modify_robots_topic,
+                                           const behavior_manager::ResourcePool& resources_template)
  : BehaviorManager(base_uri,
                    name,
-                   0,
                    camunda_topic,
                    status_topic,
                    get_resources_topic,
                    give_resources_topic,
-                   give_up_resources_topic,
+                   update_resources_topic,
                    modify_robots_topic,
-                   config_file_path)
+                   resources_template)
 {}
 
 architecture_msgs::BehaviorStatus::Response::Ptr EmptyBehaviorManager::getStatus() const noexcept

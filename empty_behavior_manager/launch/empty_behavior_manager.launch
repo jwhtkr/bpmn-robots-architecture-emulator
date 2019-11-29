@@ -1,37 +1,76 @@
 <!-- empty_behavior_manager.launch -->
 
 <launch>
-  <arg name="resource_return_topic" default="default_resource_return_topic"
-       doc="This is the topic that the Behavior Manager will use to notify other nodes
-            that it released resources." />
+  <arg name="behavior_name"          default="empty_behavior" />
+  <arg name="base_uri"               default="http://localhost:8080/" />
+  <arg name="status_topic"           default="status_topic" />
+  <arg name="get_resources_topic"    default="resources_ask" />
+  <arg name="give_resources_topic"   default="resources_take" />
+  <arg name="update_resources_topic" default="resource_return" />
+  <arg name="modify_robots_topic"    default="thread_pool" />
+  <arg name="listen_topic"           default="behaviors" />
 
-  <arg name="resource_request_topic" default="default_resource_request_topic"
-       doc="This topic should connect to the Resources Manager through a service call." />
-
-  <arg name="take_resources_topic" default="default_resource_request_topic"
-       doc="This is the topic that the Resource Manager uses to take resources from the Behavior
-            Manager. Note that it will appear as [behavior name]/[instance id]/[take_resources_topic]" />
-
-  <arg name="modify_nodes_topic" default="default_modify_nodes_topic"
-       doc="This is the topic that Behavior Managers use to request that the Master ThreadPool
-            spins up, remaps, or ends nodes." />
-
-  <arg name="config_file" default="$(find empty_behavior_manager)/config/empty_behavior_manager.json"
-       doc="This is the Json object that holds a list of the resources this Behavior Manager needs." />
-
-  <arg name="listen_topic" default="listen_topic" />
+  <include file="$(find behavior_manager)/launch/behavior_pool.launch" ns="empty_behavior_manager_node" >
+    <arg name="behavior_name"          value="$(arg behavior_name)" />
+    <arg name="base_uri"               value="$(arg base_uri)" />
+    <arg name="status_topic"           value="$(arg status_topic)" />
+    <arg name="get_resources_topic"    value="$(arg get_resources_topic)" />
+    <arg name="give_resources_topic"   value="$(arg give_resources_topic)" />
+    <arg name="update_resources_topic" value="$(arg update_resources_topic)" />
+    <arg name="modify_robots_topic"    value="$(arg modify_robots_topic)" />
+    <arg name="listen_topic"           value="$(arg listen_topic)" />
+  </include>
 
   <node name="empty_behavior_manager_node"
         type="empty_behavior_manager_node"
         pkg="empty_behavior_manager"
         output="screen"
-        launch-prefix="" >
+        launch-prefix="gdb" >
+    <rosparam>
+      role_namespaces:
+        - "needed_2_bot_role"
+        - "not_needed_role"
 
-    <param name="listen_topic"           value="$(arg listen_topic)"           />
-    <param name="resource_return_topic"  value="$(arg resource_return_topic)"  />
-    <param name="resource_request_topic" value="$(arg resource_request_topic)" />
-    <param name="take_resources_topic"   value="$(arg take_resources_topic)"   />
-    <param name="modify_nodes_topic"     value="$(arg modify_nodes_topic)"     />
-    <param name="config_file"            value="$(arg config_file)"            />
+      needed_2_bot_role:
+        name: "needed_2_bot_role"
+        required: true
+        priority: 3
+
+        resource_namespaces:
+          - "robot1"
+          - "robot2"
+
+        robot1:
+          name: "robot1"
+          category: "ground"
+          type: "turtle"
+          required: true
+          priority: 10
+          nodes:
+            - "needed_nodes_for_role"
+        robot2:
+          name: "robot2"
+          category: "ground"
+          type: "turtle"
+          required: false
+          priority: 1
+          nodes:
+            - "not_needed_nodes_for_role"
+      not_needed_role:
+        name: "not_needed_role"
+        required: false
+        priority: 3
+        resource_namespaces:
+          - "robot3"
+
+        robot3:
+          name: "robot3"
+          category: "ground"
+          type: "turtle"
+          required: true
+          priority: 10
+          nodes:
+            - "nodes_that_are_needed_for_a_unneeded_role"
+    </rosparam>
   </node>
 </launch>

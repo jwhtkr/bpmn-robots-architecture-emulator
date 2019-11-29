@@ -37,15 +37,15 @@ public:
   /**
    * @Constructor
    **/
-  EmptyBehaviorManager(const std::string& base_uri,
-                       const std::string& name,
-                       const std::string& camunda_topic,
-                       const std::string& status_topic,
-                       const std::string& get_resources_topic,
-                       const std::string& give_resources_topic,
-                       const std::string& give_up_resources_topic,
-                       const std::string& modify_robots_topic,
-                       const std::string& config_file_path);
+  EmptyBehaviorManager(const std::string&                    base_uri,
+                       const std::string&                    name,
+                       const std::string&                    camunda_topic,
+                       const std::string&                    status_topic,
+                       const std::string&                    get_resources_topic,
+                       const std::string&                    give_resources_topic,
+                       const std::string&                    update_resources_topic,
+                       const std::string&                    modify_robots_topic,
+                       const behavior_manager::ResourcePool& resources_template);
   /**
    * @Deconstructor
    **/

@@ -8,6 +8,8 @@ find_package(catkin REQUIRED
     behavior_manager
 )
 
+find_package(cpprestsdk REQUIRED COMPONENTS cpprest)
+
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -18,9 +20,8 @@ find_package(catkin REQUIRED
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES
-    ${PROJECT_NAME}
+  INCLUDE_DIRS
+    include
   CATKIN_DEPENDS
     behavior_manager
 )
@@ -34,27 +35,16 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-## EmptyBehaviorManager Library
-#add_library(${PROJECT_NAME}
-#  src/empty_behavior_manager.cpp
-#)
-#add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-#target_link_libraries(${PROJECT_NAME}
-#  behavior_manager
-#  ${catkin_LIBRARIES}
-#)
-
 ## Test Node
-#add_executable(${PROJECT_NAME}_node
-#  src/empty_behavior_manager_node.cpp
-#  src/empty_behavior_manager.cpp
-#)
-#set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME ${PROJECT_NAME}_node PREFIX "")
-#add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-#target_link_libraries(${PROJECT_NAME}_node
-#  behavior_manager
-#  ${catkin_LIBRARIES}
-#)
+add_executable(${PROJECT_NAME}_node
+  src/empty_behavior_manager_node.cpp
+  src/empty_behavior_manager.cpp
+)
+add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(${PROJECT_NAME}_node
+  cpprestsdk::cpprest
+  ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##
