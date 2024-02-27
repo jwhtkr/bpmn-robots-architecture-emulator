@@ -1,0 +1,15 @@
+<!-- resource_manager_emulator.launch -->
+
+<launch>
+  <arg name="request_topic"       default="request_topic"
+       doc="This is the topic that Behavior Managers will request resources with." />
+  <arg name="get_resources_topic" default="get_resources_topic"
+       doc="This is the topic that the Resource Manager will ask for resources back on." />
+  <arg name="return_resources_topic" default="return_resources_topic" />
+
+  <node name="resource_manager_emulator" type="resource_manager_emulator_node" pkg="resource_manager_emulator" output="screen" launch-prefix="xterm -e" >
+    <param name="request_topic"          value="$(arg request_topic)" />
+    <param name="get_resources_topic"    value="$(arg get_resources_topic)" />
+    <param name="return_resources_topic" value="$(arg return_resources_topic)" />
+  </node>
+</launch>
